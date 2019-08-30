@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {SpeechrecognitionserviceService} from '../service/speechrecognitionservice.service';
@@ -13,12 +13,15 @@ import { from } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
 
+//   @ViewChild('input2') input: ElementRef;
+  @ViewChild ('input2',{static: false}) input2 :ElementRef;
   loginForm: FormGroup;
     loading = false;
     submitted = false;
     returnUrl: string;
    
   speechData: string; 
+  nextSpeechWord: string;
   showSearchButton: boolean;
 
   constructor( private formBuilder: FormBuilder,
@@ -27,6 +30,7 @@ export class LoginComponent implements OnInit {
     private speechRecognitionService: SpeechrecognitionserviceService) {
       this.speechData = "";
       this.showSearchButton = true;
+      // this.speechRecognitionService.record();
      }
 
   ngOnInit() {
@@ -36,12 +40,7 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
   });
-  
-
-  // reset login status
-  // this.authenticationService.logout();
-
-  // get return url from route parameters or default to '/'
+  this.activateSpeechSearchMovie();
   this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
@@ -67,6 +66,15 @@ export class LoginComponent implements OnInit {
           //listener
           (value) => {
               this.speechData = value;
+              if(this.speechData!=""){
+                  this.activateSpeechSearchMovie();
+                  this.nextSpeechWord=value;
+                  console.log(this.nextSpeechWord);
+                  if(this.nextSpeechWord=="yes"){
+                    this.input2.nativeElement.focus();
+                    console.log('focus');
+                  }
+              }
               console.log(value);
           },
           //errror
@@ -83,6 +91,41 @@ export class LoginComponent implements OnInit {
               console.log("--complete--");
               this.activateSpeechSearchMovie();
           });
+  }
+
+  activateUserResponse() :void {
+
+    this.speechRecognitionService.userResponse()
+    .subscribe(
+        //listen user response
+        (value) => {
+            this.speechData = value;
+            if(this.speechData!=""){
+                this.activateSpeechSearchMovie();
+                this.nextSpeechWord=value;
+                console.log(this.nextSpeechWord);
+                if(this.nextSpeechWord=="yes"){
+                  this.input2.nativeElement.focus();
+                  console.log('focus');
+                }
+            }
+            console.log(value);
+        },
+        //errror
+        (err) => {
+            console.log(err);
+            if (err.error == "no-speech") {
+                console.log("--restatring service--");
+                this.activateSpeechSearchMovie();
+            }
+        },
+        //completion
+        () => {
+            this.showSearchButton = true;
+            console.log("--complete--");
+            this.activateSpeechSearchMovie();
+        });
+
   }
   // loginUser(event){
   //   event.preventDefault();
