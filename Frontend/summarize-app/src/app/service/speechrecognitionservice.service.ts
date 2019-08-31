@@ -108,6 +108,7 @@ export class SpeechrecognitionserviceService {
     DestroySpeechObject() {
       if (this.speechRecognition)
           this.speechRecognition.stop();
+          console.log("stopped speech recognition")
     }
 
 }
