@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SpeechrecognitionserviceService } from '../service/speechrecognitionservice.service';
 import { TextToSpeechService } from '../service/text-to-speech.service';
+import {Subscription} from 'rxjs'
 import { first } from 'rxjs/operators';
 import { AuthService } from '../auth.service';
 import { from } from 'rxjs';
@@ -23,9 +24,14 @@ export class LoginComponent implements OnInit {
     speechData: string;
     nextSpeechWord: string;
     nextUserUtterance: string;
+    passwordUtterance:string;
     speechWord: string;
     speechUsername: string;
+    speechPasswordResponse:string;
     showSearchButton: boolean;
+    sub: Subscription;
+    sub2:Subscription;
+
 
     constructor(private formBuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -69,7 +75,7 @@ export class LoginComponent implements OnInit {
     activateSpeechSearchMovie(): void {
         this.showSearchButton = false;
 
-        this.speechRecognitionService.record()
+        this.sub=this.speechRecognitionService.record()
             .subscribe(
                 //listener
                 (value) => {
@@ -81,11 +87,11 @@ export class LoginComponent implements OnInit {
                         this.speechWord = "Is the username " + this.speechData + " correct";
                         this.activateSpeechSynthesis(this.speechWord)
                         this.activateSpeechRecord();
-                        console.log(this.nextUserUtterance);
-                        if (this.nextUserUtterance == "yes") {
-                            this.input2.nativeElement.focus();
-                            console.log('focus');
-                        }
+                        // console.log(this.nextUserUtterance+"next user utterance");
+                        // if (this.nextUserUtterance == "yes") {
+                        //     this.input2.nativeElement.focus();
+                        //     console.log('focus');
+                        // }
                     }
                     console.log(value);
                 },
@@ -106,13 +112,24 @@ export class LoginComponent implements OnInit {
     }
 
     activateSpeechRecord(): any {
-        this.speechRecognitionService.userResponse()
+        this.sub2=this.speechRecognitionService.record()
             .subscribe(
                 //listener
                 (value) => {
                     console.log("speech record activated again");
-                    return this.nextUserUtterance = value;
-                    // console.log(value);
+                    console.log(value);
+                    this.nextUserUtterance=value;
+                    console.log(this.nextUserUtterance);
+                    console.log(this.nextUserUtterance+"next user utterance");
+                    if (this.nextUserUtterance == "yes") {
+                        this.input2.nativeElement.focus();
+                        console.log('focus');
+                        this.activateSpeechSynthesis("Please say the password to continue");
+                        this.stopSpeechRecordingUtterance();
+                        this.activatePasswordUtterance();
+                    }
+                    return this.nextUserUtterance;
+                    console.log(value);
                 },
                 //errror
                 (err) => {
@@ -131,7 +148,41 @@ export class LoginComponent implements OnInit {
     }
 
     stopSpeechRecording(): void {
+        this.sub.unsubscribe();
+        // this.sub2.unsubscribe();
         this.speechRecognitionService.DestroySpeechObject();
+    }
+
+    stopSpeechRecordingUtterance():void{
+        this.sub2.unsubscribe();
+    }
+
+    activatePasswordResponse():void{
+        this.speechRecognitionService.record()
+        .subscribe(
+            (value)=>{
+                this.speechPasswordResponse=value;
+                if(this.speechPasswordResponse=="yes"){
+                    console.log("Request is send to the server")
+                    this.activateSpeechSynthesis("Request is send to the server")
+                }
+            }
+        )
+    }
+
+    activatePasswordUtterance():void{
+        this.speechRecognitionService.record()
+        .subscribe(
+            (value)=>{
+                this.passwordUtterance=value;
+                this.activateSpeechSynthesis("Is the password "+this.passwordUtterance+" correct");
+                this.stopSpeechRecordingUtterance();
+                this.activatePasswordResponse();
+                
+                
+                
+            }
+        )
     }
 
     activateSpeechSynthesis(input: string): void {
