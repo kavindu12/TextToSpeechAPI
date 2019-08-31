@@ -128,6 +128,10 @@ export class LoginComponent implements OnInit {
                         this.stopSpeechRecordingUtterance();
                         this.activatePasswordUtterance();
                     }
+                    else{
+                        this.activateSpeechSynthesis("Please say again the username")
+                        this.activateSpeechSearchMovie();
+                    }
                     return this.nextUserUtterance;
                     console.log(value);
                 },
@@ -165,6 +169,10 @@ export class LoginComponent implements OnInit {
                 if(this.speechPasswordResponse=="yes"){
                     console.log("Request is send to the server")
                     this.activateSpeechSynthesis("Request is send to the server")
+                }
+                else{
+                    this.activateSpeechSynthesis("Please say again the password")
+                    this.activatePasswordUtterance();
                 }
             }
         )
