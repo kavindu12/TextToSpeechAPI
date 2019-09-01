@@ -67,8 +67,8 @@ export class LoginComponent implements OnInit {
         if (this.loginForm.invalid) {
             return;
         }
-
         this.loading = true;
+        this.router.navigateByUrl('/researchPaperViewer');
 
     }
 

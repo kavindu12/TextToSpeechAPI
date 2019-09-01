@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {PdfViewerModule} from 'ng2-pdf-viewer'
+import {HttpClientModule} from '@angular/common/http';
 // import { Injectable,NgZone } from '@angular/core';
 // import { Observable } from 'rxjs';
 // import * as _ from "lodash";
@@ -13,6 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { RouterModule } from '@angular/router';
 import { from } from 'rxjs';
 import { AlertComponent } from './alert/alert.component';
+import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
 
 @NgModule({
   declarations: [
@@ -21,10 +24,13 @@ import { AlertComponent } from './alert/alert.component';
     AdminComponent,
     HomeComponent,
     AlertComponent,
+    PdfViewerComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    PdfViewerModule,
+    HttpClientModule,
     // Observable,
     // Injectable,
     // NgZone,
@@ -42,6 +48,10 @@ import { AlertComponent } from './alert/alert.component';
       {
         path:'admin',
         component:AdminComponent
+      },
+      {
+        path:'researchPaperViewer',
+        component:PdfViewerComponent
       }
     ])
   ],
