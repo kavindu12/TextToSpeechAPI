@@ -1,6 +1,9 @@
 from flask import Flask, jsonify,request
 from convertPdfToString import getPDFText
+from getAllPdfFileNames import getListOfFileNames
 import flowChartDetector
+import json
+
 
 
 app = Flask(__name__)
@@ -12,8 +15,7 @@ def jsonres():
     print(filename)
     genereted_str=flowChartDetector.process_pdf_file_to_flow_diagrm(filename)
 
-    # return jsonify({'status':'success','datastr':genereted_str})
-    return genereted_str
+    return  jsonify({"flowChartText":genereted_str});
 
 @app.route('/researchPaperText',methods=["GET"])
 def hello_world():
@@ -21,6 +23,11 @@ def hello_world():
     pdfFileObj = open('E:\SLIIT\PDF\demo.pdf','rb')     #'rb' for read binary mode
     allText =getPDFText(pdfFileObj)
     return jsonify({"text":allText})
+
+@app.route('/getAllFiles',methods=["GET"])
+def get_files():
+    list = getListOfFileNames();
+    return jsonify(list)
 
 @app.after_request
 def add_headers(response):
