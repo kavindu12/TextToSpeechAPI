@@ -1,0 +1,3 @@
+interface UserResponse {
+    text :string;
+}
