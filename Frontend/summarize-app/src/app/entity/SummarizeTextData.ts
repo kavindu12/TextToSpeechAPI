@@ -1,0 +1,3 @@
+interface SummarizeTextData{
+    SummarizeText:string;
+}

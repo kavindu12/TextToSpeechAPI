@@ -22,4 +22,12 @@ export class ReaderViewService {
 
     return this.http.get<FlowChartData>('http://127.0.0.1:5000/pdf_flow_chart_response',{params:this.params})
   }
+
+  getSummarizeText(fileName:string):Observable<SummarizeTextData>{
+    console.log("came here");
+    this.pdfFileName = fileName + ".pdf";
+    this.params = new HttpParams().set('filename', this.pdfFileName);
+
+    return this.http.get<SummarizeTextData>('http://127.0.0.1:5000/summarize_response',{params:this.params})
+  }
 }

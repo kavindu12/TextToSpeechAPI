@@ -13,6 +13,7 @@ export class ReaderViewComponent implements OnInit {
 
   @Input() childMessage:string;
   flowChartData:string;
+  summarizeText:string;
   loadOnce:boolean=true;
 
   constructor(private readerViewService:ReaderViewService,
@@ -29,6 +30,7 @@ export class ReaderViewComponent implements OnInit {
     if(this.childMessage!=undefined && this.loadOnce==true){
       console.log("File name is "+this.childMessage)
       this.getFileName(this.childMessage)
+      this.getSummarizeText(this.childMessage)
       this.loadOnce=false;
     }
   }	
@@ -40,7 +42,17 @@ export class ReaderViewComponent implements OnInit {
       data=>{
         this.flowChartData=data.flowChartText;
         console.log(this.flowChartData);
-        this.activateSpeechSynthesis(this.flowChartData);
+        this.activateSpeechSynthesis("Reading the Flow Chart Information of the Research Paper"+this.flowChartData);
+      }
+    )
+  }
+
+  getSummarizeText(fileName:string){
+    this.readerViewService.getSummarizeText(fileName).subscribe(
+      data=>{
+        this.summarizeText=data.SummarizeText;
+        console.log(this.summarizeText);
+        this.activateSpeechSynthesis("Reading the Summarize Text Of the Research Paper"+this.summarizeText);
       }
     )
   }
