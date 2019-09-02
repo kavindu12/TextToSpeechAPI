@@ -1,11 +1,25 @@
 <div class="res">
-  <img src="../../assets/Cad.gif" style="height:100px;width:100%">
-  <h2 class="res">All Files</h2>
+  <!-- <img src="../../assets/Cad.gif" style="height:100px;width:100%"> -->
+  <!-- <h2 class="res">All Files</h2> -->
 
   <!-- <p style="color:black">{{pdfText}}</p> -->
-  <li *ngFor="let file of fileNameArray">
-    {{file}}
-  </li>
+  <!-- <li *ngFor="let file of fileNameArray">
+    {{file}}<img src="../../assets/pdficon.png" style="height:100px;widows: 50px;">
+  </li> -->
+  <!-- <div *ngFor="let file of fileNameArray">
+      <img src="../../assets/pdficon.png" style="height:100px;widows: 50px;">
+      {{file}}
+  </div> -->
+  <table>
+    <tr >
+        <td *ngFor="let file of fileNameArray"><img src="../../assets/pdficon.png" style="height:100px;widows: 50px;"></td>
+
+    </tr>
+    <tr>
+        <td *ngFor="let file of fileNameArray"><p style="text-align: center"><b>{{file}}</b></p></td>
+    </tr>
+  </table>
+  
 </div>
 <app-reader-view [childMessage]="selectedFileName" ></app-reader-view>
 <!-- <div>
