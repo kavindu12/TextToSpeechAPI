@@ -4,7 +4,7 @@ import PyPDF2
 def getPDFText(pdfFileObj):
     pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
     noOfpages = pdfReader.getNumPages();
-    index = 1;
+    index = 0;
     pdfText = "";
     while index < noOfpages:
         # print(index)
