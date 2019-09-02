@@ -61,14 +61,25 @@ export class LoginComponent implements OnInit {
     get f() { return this.loginForm.controls; }
 
     onSubmit() {
-        this.submitted = true;
+        // this.submitted = true;
 
-        // stop here if form is invalid
-        if (this.loginForm.invalid) {
-            return;
+        // // stop here if form is invalid
+        // if (this.loginForm.invalid) {
+        //     return;
+        // }
+        console.log("Password is "+this.speechData && this.passwordUtterance);
+        if(this.speechData=="admin" && this.passwordUtterance=="admin"){
+            this.activateSpeechSynthesis("Successfully logged in")
+            this.loading = true;
+            this.router.navigateByUrl('/researchPaperViewer');
         }
-        this.loading = true;
-        this.router.navigateByUrl('/researchPaperViewer');
+        else{
+            this.speechData=""
+            this.passwordUtterance=""
+            this.activateSpeechSynthesis("Wrong username or password please try again");
+            this.activateSpeechSynthesis("Please say the username again")
+            this.activateSpeechSearchMovie();
+        }
 
     }
 

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {PdfViewerModule} from 'ng2-pdf-viewer'
 import {HttpClientModule} from '@angular/common/http';
+import {MatButtonModule} from '@angular/material'
 // import { Injectable,NgZone } from '@angular/core';
 // import { Observable } from 'rxjs';
 // import * as _ from "lodash";
@@ -17,6 +18,10 @@ import { from } from 'rxjs';
 import { AlertComponent } from './alert/alert.component';
 import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
 
+const MaterialComponents =[
+  MatButtonModule
+];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +34,7 @@ import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MaterialComponents,
     PdfViewerModule,
     HttpClientModule,
     // Observable,
@@ -56,6 +62,7 @@ import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
     ])
   ],
   providers: [],
+  exports:[MaterialComponents],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
