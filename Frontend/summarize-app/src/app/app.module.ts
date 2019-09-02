@@ -17,6 +17,7 @@ import { RouterModule } from '@angular/router';
 import { from } from 'rxjs';
 import { AlertComponent } from './alert/alert.component';
 import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
+import { ReaderViewComponent } from './reader-view/reader-view.component';
 
 const MaterialComponents =[
   MatButtonModule
@@ -30,6 +31,7 @@ const MaterialComponents =[
     HomeComponent,
     AlertComponent,
     PdfViewerComponent,
+    ReaderViewComponent,
   ],
   imports: [
     BrowserModule,

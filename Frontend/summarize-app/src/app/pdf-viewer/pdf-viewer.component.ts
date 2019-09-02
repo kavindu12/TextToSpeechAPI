@@ -28,6 +28,7 @@ export class PdfViewerComponent implements OnInit {
   sub2:Subscription;
   isFileName:boolean=false;
   fileName:string='';
+  selectedFileName:string;
 
 
   constructor(private pdfService: PdfServiceService,
@@ -40,7 +41,7 @@ export class PdfViewerComponent implements OnInit {
     console.log(this.pdfText);
     this.getPdfText();
     this.getFileNames();
-    this.activateSpeechSearchMovie();
+    // this.activateSpeechSearchMovie();
   }
 
   getPdfText() {
@@ -68,6 +69,7 @@ export class PdfViewerComponent implements OnInit {
         this.fileNameArray.forEach(file => {
           this.activateSpeechSynthesis(file);
         })
+        this.activateSpeechSearchMovie();
         console.log(this.fileNameArray);
       }
     )
@@ -123,6 +125,7 @@ export class PdfViewerComponent implements OnInit {
           console.log(this.nextUserUtterance);
           this.fileNameArray.forEach(file => {
             if(file==fileName){
+              this.selectedFileName=file;
               this.isFileName=true;
             }
           })

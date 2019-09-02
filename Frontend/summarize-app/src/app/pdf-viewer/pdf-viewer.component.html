@@ -1,18 +1,12 @@
 <div class="res">
-    <!-- <label> Pdf src </label>
-    <input (change)="onFileSelected()" type="file" id="file">
-    <input [(ngModel)]="page" type="text" id="page"> -->
-    <button mat-button>Summarize methodology</button>
-    <button mat-raised-button>Read the Whole Document</button>
-    <button mat-flat-button>About The App</button>
-    <button mat-stroked-button>Click Me!</button>
-    <h2 class="res">Header color</h2>
+  <h2 class="res">Header color</h2>
 
-    <!-- <p style="color:black">{{pdfText}}</p> -->
-    <li *ngFor="let file of fileNameArray">
-      {{file}}
-   </li>
+  <!-- <p style="color:black">{{pdfText}}</p> -->
+  <li *ngFor="let file of fileNameArray">
+    {{file}}
+  </li>
 </div>
+<app-reader-view [childMessage]="selectedFileName" ></app-reader-view>
 <!-- <div>
     <button >Click</button>
 </div> -->

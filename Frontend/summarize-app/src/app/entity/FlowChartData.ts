@@ -1,0 +1,3 @@
+interface FlowChartData{
+    flowChartText:string;
+}
