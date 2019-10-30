@@ -1,0 +1,3 @@
+interface GraphData {
+    GraphData :string;
+}
