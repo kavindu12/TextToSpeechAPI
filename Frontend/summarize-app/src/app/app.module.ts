@@ -18,6 +18,7 @@ import { from } from 'rxjs';
 import { AlertComponent } from './alert/alert.component';
 import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
 import { ReaderViewComponent } from './reader-view/reader-view.component';
+import {WebcamModule} from 'ngx-webcam'
 
 const MaterialComponents =[
   MatButtonModule
@@ -44,6 +45,7 @@ const MaterialComponents =[
     // NgZone,
     FormsModule,
     ReactiveFormsModule,
+    WebcamModule,
     RouterModule.forRoot([
       {
         path:'',

@@ -13,6 +13,7 @@ export class ReaderViewComponent implements OnInit {
 
   @Input() childMessage:string;
   flowChartData:string;
+  graphData:string;
   summarizeText:string;
   loadOnce:boolean=true;
 
@@ -31,6 +32,7 @@ export class ReaderViewComponent implements OnInit {
       console.log("File name is "+this.childMessage)
       this.getFileName(this.childMessage)
       this.getSummarizeText(this.childMessage)
+      this.getGraphData(this.childMessage)
       this.loadOnce=false;
     }
   }	
@@ -53,6 +55,15 @@ export class ReaderViewComponent implements OnInit {
         this.summarizeText=data.SummarizeText;
         console.log(this.summarizeText);
         this.activateSpeechSynthesis("Reading the Summarize Text Of the Research Paper"+this.summarizeText);
+      }
+    )
+  }
+
+  getGraphData(fileName:string){
+    this.readerViewService.getGraphData(fileName).subscribe(
+      data=>{
+        this.graphData=data.GraphData;
+        this.activateSpeechSynthesis("Reading Graph Data "+this.graphData);
       }
     )
   }

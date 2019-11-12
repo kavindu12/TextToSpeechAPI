@@ -7,6 +7,13 @@ interface IWindow extends Window {
   SpeechRecognition: any;
 }
 
+// declare global{
+//     interface Window{
+//         webkitSpeechRecognition: any;
+//         SpeechRecognition: any;
+//     }
+// }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,9 +26,10 @@ export class SpeechrecognitionserviceService {
   record(): Observable<string> {
 
         return Observable.create(observer => {
-            const { webkitSpeechRecognition }: IWindow = <IWindow>window;
+            // const { webkitSpeechRecognition }: IWindow = <IWindow>window;
+            const {webkitSpeechRecognition}: IWindow = <IWindow>window
             this.speechRecognition = new webkitSpeechRecognition();
-            //this.speechRecognition = SpeechRecognition;
+            //this.speechRecognition = SpeechRecognition;   
             this.speechRecognition.continuous = true;
             //this.speechRecognition.interimResults = true;
             this.speechRecognition.lang = 'en-us';
